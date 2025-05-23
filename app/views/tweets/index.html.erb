@@ -1,0 +1,50 @@
+<h1>GeekTwitter</h1>
+
+<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+
+<h3>Tweet一覧</h3>
+
+<h3>投稿を検索</h3>
+    <%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
+        <%= text_field_tag :search %>
+        <%= submit_tag '検索する'  %>
+    <% end %>
+
+<%= link_to "新規投稿へ", new_tweet_path %>
+
+<div class="tweets-container">
+    <% @tweets.each do |t| %>
+    <div class="tweet">
+
+        <% if t.image.attached? %>
+            <%= image_tag t.image, size: '250x200'%>
+        <% end %>
+    <br>
+        <%= t.user.email %>
+        <%= t.body %>
+
+        <% if user_signed_in? %>
+            <% if current_user.already_liked?(t) %>
+                <%= button_to tweet_like_path(id: t.id, tweet_id: t.id), data: { turbo_method: :delete } do %>
+                <i class="fas fa-heart"></i><%= t.likes.count %>
+            <% end %>
+        <% else %>
+            <%= button_to tweet_likes_path(id: t.id, tweet_id: t.id), data: { turbo_method: :post }  do %>
+            <i class="far fa-heart"></i><%= t.likes.count %>
+            <% end %>
+        <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= t.likes.count %>
+        <% end %>
+
+        <%= t.created_at %>
+        <%= link_to "詳細へ", tweet_path(t.id) %>
+        <%= link_to "編集する", edit_tweet_path(t.id) %>
+        <%= link_to "削除する", tweet_path(t.id), data: { turbo_method: :delete } %>
+    </div>
+    <% end %>
+    <br>
+    <%= page_entries_info @tweets %>
+    <%= paginate @tweets %>
+
+</div>
