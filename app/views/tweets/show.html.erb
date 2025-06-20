@@ -1,4 +1,7 @@
 <h1>GeekTwitter</h1>
+
+<%= link_to "Tweet一覧に戻る", tweets_path %>
+
 <h3>Tweet詳細</h3>
 <div class="tweet">
     <p><%= @tweet.body %></p>
@@ -49,6 +52,34 @@
             <% end %>
         <% end %>
     <% end %>
-</div>
 
-<%= link_to "Tweet一覧に戻る", tweets_path %>
+    <% if user_signed_in? %>
+        <% if @tweet.order.nil? %>
+            <% if current_user.id != @tweet.user_id %>
+                <!-- 出品者以外が未購入商品を見る場合：購入ボタン -->
+                <%= button_to "購入する", orders_path(tweet_id: @tweet.id), method: :post, class: "btn btn-success" %>
+            <% else %>
+                <!-- 出品者自身 -->
+                <p>これはあなたの出品です。</p>
+            <% end %>
+        <% else %>
+            <% if [@tweet.order.buyer_id, @tweet.user_id].include?(current_user.id) %>
+                <!-- 出品者または購入者 → チャットリンク表示 -->
+                <%= link_to "チャット画面へ", order_messages_path(@tweet.order), class: "btn btn-primary" %>
+
+                <% if current_user.id == @tweet.user_id %>
+                    <!-- 出品者だけ取引中止ボタン表示 -->
+                    <%= button_to "取引を中止する", order_path(@tweet.order), method: :delete, data: { confirm: "本当に取引を中止しますか？" }, class: "btn btn-danger" %>
+                <% end %>
+            <% else %>
+                <!-- 第三者が見ているとき -->
+                <p>この商品は取引中です。</p>
+            <% end %>
+        <% end %>
+    <% else %>
+        <!-- ログインしていないユーザー -->
+        <p>購入・チャット機能を使うにはログインが必要です。</p>
+    <% end %>
+
+
+<div>

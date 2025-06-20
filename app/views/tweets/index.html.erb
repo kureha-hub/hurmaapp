@@ -1,69 +1,55 @@
-<h1>GeekTwitter</h1>
-
-<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
-
-<h3>Tweet一覧</h3>
-
-<h3>投稿を検索</h3>
-    <%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
-        <%= text_field_tag :search %>
-        <%= submit_tag '検索する'  %>
-    <% end %>
-
-    <%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
-        <% Tag.all.each do |t| %>
-            <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
+<div class="header-wrapper">
+    <!-- 検索バー -->
+    <div class="search-bar">
+        <%= form_tag({controller: "tweets", action: "index"}, method: :get) do %>
+            <%= label_tag :search, "検索" %> <!-- 検索のラベルを追加 -->
+            <%= text_field_tag :search, nil, placeholder: "検索", class: "search-input" %>
+            <%= submit_tag '検索', class: "search-submit" %> <!-- 検索ボタンにクラスを追加 -->
         <% end %>
-        <%= submit_tag '検索' %>
-    <% end %>
-
-    <%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
-        <%= text_field_tag :tag %>
-        <%= submit_tag 'タグを追加' %>
-    <% end %>
-
-<%= link_to "新規投稿へ", new_tweet_path %>
-
-<div class="tweets-container">
-
-    <% if user_signed_in? %>
-        <%= link_to "マイページへ", user_path(current_user.id) %>
-    <% end %>
-    
-    <% @tweets.each do |t| %>
-    <div class="tweet">
-
-        <% if t.image.attached? %>
-            <%= image_tag t.image, size: '250x200'%>
-        <% end %>
-    <br>
-        <%= t.user.email %>
-        <%= t.body %>
-
-        <% if user_signed_in? %>
-            <% if current_user.already_liked?(t) %>
-                <%= button_to tweet_like_path(id: t.id, tweet_id: t.id), data: { turbo_method: :delete } do %>
-                <i class="fas fa-heart"></i><%= t.likes.count %>
-            <% end %>
-        <% else %>
-            <%= button_to tweet_likes_path(id: t.id, tweet_id: t.id), data: { turbo_method: :post }  do %>
-            <i class="far fa-heart"></i><%= t.likes.count %>
-            <% end %>
-        <% end %>
-        <% else %>
-            <i class="far fa-heart"></i><%= t.likes.count %>
-        <% end %>
-
-        <%= t.created_at %>
-        <%= link_to "詳細へ", tweet_path(t.id) %>
-        <% if user_signed_in? && current_user.id == t.user_id %>
-            <%= link_to "編集する", edit_tweet_path(t.id) %>
-            <%= link_to "削除する", tweet_path(t.id), data: { turbo_method: :delete } %>
-        <% end %> 
     </div>
-    <% end %>
-    <br>
-    <%= page_entries_info @tweets %>
-    <%= paginate @tweets %>
 
+    <!-- アイコン・出品ボタン -->
+    <div class="menu-icons">
+        <%= link_to user_path(current_user.id) do %>
+            <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #81d9d7;"></i>
+        <% end %>
+
+        <i class="fa-solid fa-heart" style="font-size: 40px; color: #ffc2f7;"></i>
+
+        <%= link_to "出品", new_tweet_path, class: "listing-button" %> <!-- 出品ボタン -->
+    </div>
 </div>
+
+<!-- 商品リスト -->
+<div class="tweets-container">
+    <% @tweets.each do |tweet| %>
+        <div class="tweet">
+            <% if tweet.image.attached? %>
+                <%= link_to tweet_path(tweet.id) do %>
+                    <%= image_tag tweet.image, size: "250x200", class: "tweet-image" %> <!-- 画像にクラスを追加 -->
+                <% end %>
+            <% end %>
+            
+            <div class="tweet-info">
+                <p><%= tweet.user.name %></p> <!-- ユーザー名 -->
+                <p><%= tweet.body %></p> <!-- 投稿内容 -->
+            </div>
+        </div>
+    <% end %>
+</div>
+
+<!-- ページネーション -->
+<div class="pagination">
+    <%= paginate @tweets %>
+</div>
+
+<!-- タグ検索フォーム -->
+<%= form_tag({controller: "tweets", action: "index"}, method: :get) do %>
+    <% Tag.all.each do |tag| %>
+        <label>
+            <%= check_box_tag :tag_ids, tag.id %>
+            <%= tag.name %>
+        </label>
+    <% end %>
+    <%= submit_tag '検索' %>
+<% end %>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HurmaApp</title>
+    <%= stylesheet_link_tag 'application', media: 'all' %> <!-- アプリケーション全体でスタイルを適用 -->
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <h1>HurimaApp</h1>
+    <div class="buttons">
+        <%= link_to '<button class="btn1">サインイン</button>'.html_safe, new_user_registration_path %>
+        <%= link_to '<button class="btn2">ログイン</button>'.html_safe, tweets_path %>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- メインセクション -->
+    <section class="main-section">
+    <h2>見出し 見出し 見出し</h2>
+    <p>小見出し 小見出し 小見出し</p>
+    <div class="cta-buttons">
+            <%= link_to '<button class="btn1">さっそく始める</button>'.html_safe, new_user_registration_path %>
+            <%= link_to '<button class="btn2">ログイン</button>'.html_safe, tweets_path %>
+        </div>
+    </section>
+
+    <!-- 機能紹介 -->
+    <section class="features">
+        <h3>このアプリで何ができる？</h3>
+        <div class="feature-item">
+        <h4>作る</h4>
+        <p>説明文</p>
+        </div>
+        <div class="feature-item">
+        <h4>売る</h4>
+        <p>説明文</p>
+        </div>
+        <div class="feature-item">
+        <h4>続ける</h4>
+        <p>説明文</p>
+        </div>
+    </section>
+
+    <!-- 商品セクション -->
+    <section class="products">
+        <h3>商品</h3>
+        <div class="product-list">
+        <div class="product-item">
+            <p>商品名</p>
+            <p>価格</p>
+        </div>
+        </div>
+    </section>
+    </main>
+
+    <footer>
+    <div class="footer-content">
+        <p>© 2025 HurmaApp</p>
+    </div>
+</footer>
+
+</body>
+</html>

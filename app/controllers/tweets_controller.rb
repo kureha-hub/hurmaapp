@@ -5,7 +5,7 @@ class TweetsController < ApplicationController
         @tweets = Tweet.all
         search = params[:search]
         @tweets = @tweets.joins(:user).where("body LIKE ?", "%#{search}%") if search.present?
-        @tweets = @tweets.page(params[:page]).per(3)
+        @tweets = @tweets.page(params[:page]).per(12)
     
         if params[:tag_ids]
             @tweets = []

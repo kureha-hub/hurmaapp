@@ -1,0 +1,138 @@
+/* app/assets/stylesheets/home.css */
+
+/* ヘッダー */
+header {
+    background: #fff;
+    padding: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.buttons .btn1 {
+    padding: 10px 30px;
+    border: none;
+    background: rgba(15, 175, 170, 0.62);
+    color: white;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 20px;
+}
+.buttons .btn2 {
+    padding: 10px 30px;
+    border: 1px solid black;  /* 黒い枠線を追加 */
+    background: white;
+    color: black;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 20px;
+}
+
+/* メインセクションの背景 */
+.main-section {
+    position: relative;  /* ボタンを親要素内で相対位置に配置 */
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2)), url('/assets/bookshelf-29e53cd50eee9c1cf384d910ca0cc1b7d9d40e6d80507f467e1260f67fadfb15.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 40px;
+    text-align: center;
+    border-radius: 20px;
+    height: 200px;
+    display: flex;
+    flex-direction: column; /* 縦並びにしたまま、ボタンの配置を調整 */
+    justify-content: center; /* 縦方向に中央揃え */
+    align-items: flex-start; /* 左揃え */
+}
+
+.main-section h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: black;
+    margin-right: 10px;
+}
+
+.main-section p {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #233237;
+    text-align: left;  /* 小見出しを左揃え */
+    margin: 10px 0;  /* 小見出しの上下のスペース */
+}
+
+/* ボタンの位置調整 */
+.main-section .cta-buttons {
+    display: flex; /* 横並びにする */
+    gap: 10px;  /* ボタン同士の間隔 */
+    margin-top: 20px;  /* ボタンの上にスペース */
+    justify-content: flex-start; /* 左揃えにする */
+    align-items: center; /* ボタンを縦に揃える */
+}
+
+/* ボタン1 */
+.main-section .btn1 {
+    padding: 10px 30px;
+    border: none;
+    background: rgba(15, 175, 170);
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+/* ボタン2 */
+.main-section .btn2 {
+    padding: 10px 30px;
+    border: 1px solid black;  /* 黒い枠線を追加 */
+    background: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+
+/* 機能紹介 */
+.features {
+    text-align: center;
+    margin: 50px 0;
+}
+.features h3 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #00796B;;
+    text-align: left;
+}
+.feature-item {
+    margin: 20px;
+    display: inline-block;
+    width: 30%;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+}
+.feature-item h4 {
+    font-size: 1.25rem;
+}
+
+/* 商品セクション */
+.products {
+    margin: 50px 0;
+}
+.products h3 {
+    text-align: center;
+    font-size: 2rem;
+    color: #00796B;
+}
+
+/* フッター */
+footer {
+    background: rgba(15, 175, 170, 0.62);
+    padding: 20px;
+    color: white;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

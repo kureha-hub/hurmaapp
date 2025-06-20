@@ -1,0 +1,14 @@
+<h2>チャット</h2>
+
+<% @messages.each do |message| %>
+    <p><strong><%= message.user.name %>:</strong> <%= message.body %></p>
+<% end %>
+
+<%= form_with(model: [@order, @message]) do |f| %>
+    <%= f.text_area :body, rows: 3 %><br>
+    <%= f.submit "送信" %>
+<% end %>
+
+<% if current_user.id == @order.tweet.user_id %>
+    <%= button_to "取引を中止する", order_path(@order), method: :delete, data: { confirm: "本当に取引を中止しますか？" }, class: "btn btn-danger" %>
+<% end %>
